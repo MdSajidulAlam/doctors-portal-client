@@ -7,8 +7,8 @@ const InfoCard = ({ img, color, title }) => {
             <figure>
                 <img src={img} alt="Album" />
             </figure>
-            <div class="card-body">
-                <h2 class="card-title text-white">{title}</h2>
+            <div className="card-body">
+                <h2 className="card-title text-white">{title}</h2>
                 <p className='text-white'>Click the button to listen on Spotiwhy app.</p>
             </div>
         </div>
