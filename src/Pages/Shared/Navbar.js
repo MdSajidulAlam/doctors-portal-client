@@ -14,7 +14,7 @@ const Navbar = () => {
         <li><Link to='/review'>Review</Link></li>
         <li><Link to='/contact'>Contact US</Link></li>
         <li><Link to='/about'>About</Link></li>
-        <li>{user ? <button onClick={() => signOut(auth)} class="btn btn-ghost">Sign Out</button> : <Link to='/login'>Login</Link>}</li>
+        <li>{user ? <button onClick={() => signOut(auth)} className="btn btn-ghost">Sign Out</button> : <Link to='/login'>Login</Link>}</li>
     </>
     return (
         <div className="navbar bg-base-100 lg:px-12">
@@ -34,9 +34,7 @@ const Navbar = () => {
                     {manuItems}
                 </ul>
             </div>
-            <div className="navbar-end">
-                <a className="btn">Get started</a>
-            </div>
+
         </div>
     );
 };
