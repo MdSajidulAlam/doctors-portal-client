@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 import Loading from '../Shared/Loading';
@@ -7,7 +7,6 @@ import BookingModal from './BookingModal';
 import Service from './Service';
 
 const AvailableAppointments = ({ date }) => {
-    // const [services, setServices] = useState([])
     const [treatment, setTreatment] = useState(null)
     const formatedDate = format(date, 'PP')
 
@@ -15,18 +14,13 @@ const AvailableAppointments = ({ date }) => {
         fetch(`http://localhost:5000/available?date=${formatedDate}`)
             .then(res => res.json())
     )
-    console.log(services);
     if (isLoading) {
         return <Loading></Loading>
     }
     if (error) {
         toast.error(error.message)
     }
-    // useEffect(() => {
-    //     fetch(`http://localhost:5000/available?date=${formatedDate}`)
-    //         .then(res => res.json())
-    //         .then(data => setServices(data))
-    // }, [formatedDate])
+
     return (
         <div>
             <h1 className='text-xl text-secondary text-center my-12'>Available appoinments  {format(date, 'PP')}</h1>

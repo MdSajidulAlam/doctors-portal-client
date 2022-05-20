@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
     const { _id, name, slots } = treatment
-    const [user, loading] = useAuthState(auth)
+    const [user] = useAuthState(auth)
     const formatedDate = format(date, 'PP')
 
     const handleBooking = (e) => {
