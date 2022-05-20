@@ -4,6 +4,7 @@ import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
@@ -47,7 +48,7 @@ const Login = () => {
     const resetPassword = async () => {
         if (email) {
             await sendPasswordResetEmail(email)
-            console.log("Email sent");
+            toast.success('Verification email sent')
         }
 
     }
