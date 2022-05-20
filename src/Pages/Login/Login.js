@@ -33,7 +33,7 @@ const Login = () => {
 
     }, [googleUser, user, navigate, from])
 
-    if (loading || googleLoading) {
+    if (loading || googleLoading || sending) {
         return <Loading></Loading>
     }
     if (error || googleError) {
