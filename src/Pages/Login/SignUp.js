@@ -42,7 +42,6 @@ const SignUp = () => {
     };
 
     if (token) {
-
         navigate('/appointment')
     }
     return (
