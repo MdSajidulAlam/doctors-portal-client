@@ -3,7 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import About from './Pages/About/About';
 import Appointment from './Pages/Appoinment/Appointment';
+import AddDoctor from './Pages/Dashboard/AddDoctor';
 import Dashboard from './Pages/Dashboard/Dashboard';
+import ManageDoctors from './Pages/Dashboard/ManageDoctors';
 import MyAppointment from './Pages/Dashboard/MyAppointment';
 import MyHistory from './Pages/Dashboard/MyHistory';
 import MyReview from './Pages/Dashboard/MyReview';
@@ -38,6 +40,8 @@ function App() {
           <Route path='review' element={<MyReview />}></Route>
           <Route path='history' element={<MyHistory />}></Route>
           <Route path='users' element={<RequireAdmin><Users /></RequireAdmin>}></Route>
+          <Route path='addDoctor' element={<RequireAdmin><AddDoctor /></RequireAdmin>}></Route>
+          <Route path='manageDoctor' element={<RequireAdmin><ManageDoctors /></RequireAdmin>}></Route>
         </Route>
       </Routes>
       <Toaster />
