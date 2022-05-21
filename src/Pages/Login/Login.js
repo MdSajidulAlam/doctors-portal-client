@@ -15,20 +15,19 @@ const Login = () => {
     const navigate = useNavigate()
     let from = location.state?.from?.pathname || "/";
     const email = getValues("email")
-    const token = useToken(user || googleUser)
+    const [token] = useToken(user || googleUser)
 
     const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(
         auth
     );
 
     let signInError
-
     useEffect(() => {
         if (token) {
             navigate(from, { replace: true });
         }
 
-    }, [token, navigate, from])
+    }, [token, from, navigate])
 
     if (loading || googleLoading || sending) {
         return <Loading></Loading>
