@@ -6,7 +6,7 @@ import Loading from '../Shared/Loading';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    const { data: services, isLoading } = useQuery('services', () => fetch('https://mighty-island-89854.herokuapp.com/service').then(res => res.json()))
+    const { data: services, isLoading } = useQuery('services', () => fetch('http://localhost:5000/service').then(res => res.json()))
 
 
     const imageStorageKey = '02edd5c413d22a736d8b7acfa51c03ac'
@@ -42,7 +42,7 @@ const AddDoctor = () => {
                     }
                     // send to your database
 
-                    fetch('https://mighty-island-89854.herokuapp.com/doctor', {
+                    fetch('http://localhost:5000/doctor', {
                         method: "POST",
                         headers: {
                             'content-type': 'application/json',

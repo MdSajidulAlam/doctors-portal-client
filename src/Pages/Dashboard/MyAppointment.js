@@ -1,7 +1,7 @@
 import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 
 const MyAppointment = () => {
@@ -10,7 +10,7 @@ const MyAppointment = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`https://mighty-island-89854.herokuapp.com/booking?patient=${user.email}`, {
+        fetch(`http://localhost:5000/booking?patient=${user.email}`, {
             method: "GET",
             headers: {
                 "authorization": `Bearer ${localStorage.getItem('accessToken')}`,
@@ -45,6 +45,7 @@ const MyAppointment = () => {
                             <th>Date</th>
                             <th>Time</th>
                             <th>Treatment</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,6 +58,12 @@ const MyAppointment = () => {
                                     <td>{appointment.date}</td>
                                     <td>{appointment.slot}</td>
                                     <td>{appointment.treatment}</td>
+                                    <td>
+                                        {(appointment.price && !appointment.paid) && <Link to={`/dashboard/payment/${appointment._id}`}><button className='btn btn-xs btn-success'>Pay</button></Link>}
+                                    </td>
+                                    <td>
+                                        {(appointment.price && appointment.paid) && <span>Paid</span>}
+                                    </td>
                                 </tr>)
                         }
                     </tbody>
