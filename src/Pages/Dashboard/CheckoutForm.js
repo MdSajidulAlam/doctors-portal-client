@@ -2,16 +2,17 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
 
 const CheckoutForm = ({ appointment }) => {
-    const { price, patient, patientName } = appointment
+    const { price, patient, patientName, _id } = appointment
     const stripe = useStripe();
     const elements = useElements();
     const [cardError, setCardError] = useState('')
+    const [processing, setProcessing] = useState(false)
     const [success, setSuccess] = useState('')
     const [transactionId, setTransactionId] = useState('')
     const [clientSecret, setClientSecret] = useState("");
 
     useEffect(() => {
-        fetch('http://localhost:5000/create-payment-intent', {
+        fetch('https://mighty-island-89854.herokuapp.com/create-payment-intent', {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -49,7 +50,7 @@ const CheckoutForm = ({ appointment }) => {
         } else {
             setCardError('')
         }
-
+        setProcessing(true)
         const { paymentIntent, error: intentError } = await stripe.confirmCardPayment(
             clientSecret,
             {
@@ -65,12 +66,32 @@ const CheckoutForm = ({ appointment }) => {
         if (intentError) {
             setCardError(intentError?.message)
             setSuccess('')
+            setProcessing(false)
         }
         else {
             setCardError('')
             setTransactionId(paymentIntent.id)
-            console.log(paymentIntent);
             setSuccess('Congrats! Your payment is completed')
+
+            // store payment on db
+            const payment = {
+                appointment: _id,
+                transactionId: paymentIntent.id
+            }
+            fetch(`https://mighty-island-89854.herokuapp.com/booking/${_id}`, {
+                method: "PATCH",
+                headers: {
+                    "content-type": "application/json",
+                    "authorization": `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify(payment)
+
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setProcessing(false)
+                    console.log(data);
+                })
 
         }
     }

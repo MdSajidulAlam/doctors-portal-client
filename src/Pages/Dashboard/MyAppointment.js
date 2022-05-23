@@ -10,7 +10,7 @@ const MyAppointment = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+        fetch(`https://mighty-island-89854.herokuapp.com/booking?patient=${user.email}`, {
             method: "GET",
             headers: {
                 "authorization": `Bearer ${localStorage.getItem('accessToken')}`,
@@ -52,7 +52,7 @@ const MyAppointment = () => {
                         {
                             appointments.map((appointment, index) =>
 
-                                <tr>
+                                <tr key={appointment._id}>
                                     <th>{index + 1}</th>
                                     <td>{appointment.patientName}</td>
                                     <td>{appointment.date}</td>
@@ -62,7 +62,10 @@ const MyAppointment = () => {
                                         {(appointment.price && !appointment.paid) && <Link to={`/dashboard/payment/${appointment._id}`}><button className='btn btn-xs btn-success'>Pay</button></Link>}
                                     </td>
                                     <td>
-                                        {(appointment.price && appointment.paid) && <span>Paid</span>}
+                                        {(appointment.price && appointment.paid) && <div>
+                                            <p><span className='text-success'>Paid</span></p>
+                                            <p><small className='text-success'>TransactionId: {appointment.transactionId}</small></p>
+                                        </div>}
                                     </td>
                                 </tr>)
                         }
